@@ -1,7 +1,9 @@
 package br.com.dio.desafio.dominio;
 
+import java.lang.foreign.Linker.Option;
 import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 public class Dev {
@@ -11,12 +13,24 @@ public class Dev {
 	private Set<Conteudo> conteudosConcluidos = new LinkedHashSet<>();
 	
 	public void inscreverBootcamp(Bootcamp bootcamp) {
-		
+		this.conteudosInscritos.addAll(bootcamp.getConteudos()); //addAll ta adicionando tudo do bootcamp conteudo para conteudos incritos
+		bootcamp.getDevsInscritos().add(this);
 	}
 	public void progredir() {
-		
+		Optional<Conteudo> conteudo = conteudosInscritos.stream().findFirst(); //Optional - resolve o problema de retornos nulos
+		if(conteudo.isPresent()) {
+			this.conteudosConcluidos.add(conteudo.get());
+			this.conteudosInscritos.remove(conteudo.get());
+		}else {
+			System.out.println("Você não está matriculado em nenhum conteúdo!");
+			
+		}
 	}
-	public void calcularTotalXp() {
+	public double calcularTotalXp() {
+		return this.conteudosConcluidos
+				.stream()
+				.mapToDouble(conteudo -> conteudo.calcularXp())
+				.sum();
 		
 	}
 	
