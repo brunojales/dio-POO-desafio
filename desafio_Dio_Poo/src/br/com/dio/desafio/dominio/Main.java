@@ -15,6 +15,9 @@ public class Main {
 		curso2.setDescricao("BootCamp");
 		curso2.setCargahoraria(10);
 		
+		Conteudo conteudo = new Curso(); //Polimorfismo
+		Conteudo conteudo1 = new Mentoria(); //Polimorfismo
+		
 		Mentoria mentoria1 = new Mentoria();
 		mentoria1.setTitulo("Mentoria Java");
 		mentoria1.setDescricao("BootCamp");
